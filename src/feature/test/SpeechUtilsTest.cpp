@@ -37,9 +37,9 @@ TEST(SpeechUtilsTest, AfMatmulCompare) {
     return vec;
   };
   while (numTests--) {
-    MKL_INT m = (rand() % 64) + 1;
-    MKL_INT n = (rand() % 128) + 1;
-    MKL_INT k = (rand() % 256) + 1;
+    int m = (rand() % 64) + 1;
+    int n = (rand() % 128) + 1;
+    int k = (rand() % 256) + 1;
     // Note: Arrayfire is column major
     af::array a = af::randu(k, m);
     af::array b = af::randu(n, k);

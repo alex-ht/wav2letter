@@ -1,14 +1,6 @@
 cmake_minimum_required(VERSION 3.5.1)
 
 # ----------------------------- Dependencies -----------------------------
-# CBLAS
-find_package(BLAS REQUIRED)
-if (BLAS_FOUND)
-  message(STATUS "BLAS found (library: ${BLAS_LIBRARIES}")
-else()
-  message(STATUS "BLAS not found")
-endif()
-
 # FFTW
 find_package(FFTW REQUIRED)
 if (FFTW_FOUND)
@@ -63,7 +55,6 @@ target_link_libraries(
   feature
   INTERFACE
   common
-  ${BLAS_LIBRARIES}
   ${FFTW_LIBRARIES}
   sndfile # imported target
   # ${SNDFILE_LIBRARIES}

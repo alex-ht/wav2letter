@@ -6,13 +6,6 @@ project(wav2letter++)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/")
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-#if (MSVC)
-#  add_definitions(-D_SCL_SECURE_NO_WARNINGS)
-#  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4 /MP ")
-#else()
-  # Assume GCC-style arguments
-#  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wdeprecated-declarations")
-#endif()
 # ----------------------------- Configuration -----------------------------
 
 # Build tests
@@ -26,6 +19,15 @@ endif ()
 option(BUILD_EXAMPLES "Build examples for wav2letter++" ON)
 
 # ------------------------ Global External Dependencies ------------------------
+# CBLAS
+find_package(BLAS REQUIRED)
+if (BLAS_FOUND)
+  message(STATUS "BLAS found (library: ${BLAS_LIBRARIES}")
+  link_directories(${BLAS_LIBRARIES})
+else()
+  message(STATUS "BLAS not found")
+endif()
+
 # ArrayFire
 find_package(ArrayFire 3.6.1 REQUIRED)
 if (ArrayFire_FOUND)
@@ -127,6 +129,7 @@ target_link_libraries(
   decoder
   module
   runtime
+  ${BLAS_LIBRARIES}
   )
 
 target_include_directories(

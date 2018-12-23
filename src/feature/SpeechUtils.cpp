@@ -7,7 +7,9 @@
  */
 
 #include "SpeechUtils.h"
+extern "C" {
 #include <cblas.h>
+}
 #include <glog/logging.h>
 namespace speech {
 
@@ -30,7 +32,6 @@ std::vector<T> frameSignal(
   return frames;
 }
 
-template <>
 std::vector<float> mklGemm(
     const std::vector<float>& matA,
     const std::vector<float>& matB,
@@ -64,7 +65,6 @@ std::vector<float> mklGemm(
   return matC;
 };
 
-template <>
 std::vector<double> mklGemm(
     const std::vector<double>& matA,
     const std::vector<double>& matB,

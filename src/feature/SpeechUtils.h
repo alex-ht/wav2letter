@@ -9,7 +9,6 @@
 #pragma once
 
 #include <vector>
-
 #include "FeatureParams.h"
 
 namespace speech {
@@ -22,10 +21,22 @@ std::vector<T> frameSignal(
 
 // row major;  matA - m x k , matB - k x n
 
-template <typename T>
-extern std::vector<T> mklGemm(
+/*template <typename T>
+std::vector<T> mklGemm(
     const std::vector<T>& matA,
     const std::vector<T>& matB,
+    int n,
+    int k);*/
+
+std::vector<float> mklGemm(
+    const std::vector<float>& matA,
+    const std::vector<float>& matB,
+    int n,
+    int k);
+
+std::vector<double> mklGemm(
+    const std::vector<double>& matA,
+    const std::vector<double>& matB,
     int n,
     int k);
 } // namespace speech
