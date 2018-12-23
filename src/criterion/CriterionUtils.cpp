@@ -142,25 +142,25 @@ af::array viterbiPath(const af::array& input, const af::array& trans) {
   return af::array(T, B, res.data());
 }
 
-Variable getLinearTarget(const Variable& targetVar, intl T) {
-  intl L = targetVar.dims(0);
-  intl B = targetVar.dims(1);
+Variable getLinearTarget(const Variable& targetVar, long long T) {
+  long long L = targetVar.dims(0);
+  long long B = targetVar.dims(1);
 
   std::vector<int> target(B * L);
   std::vector<int> newTarget(B * T);
 
   targetVar.host(target.data());
-  for (intl b = 0; b < B; ++b) {
+  for (long long b = 0; b < B; ++b) {
     const auto pTarget = target.data() + b * L;
     auto pNewTarget = newTarget.data() + b * T;
 
-    intl TN = w2l::getTargetSize(pTarget, L);
+    long long TN = w2l::getTargetSize(pTarget, L);
     if (TN > T || TN == 0) {
       // hacky way to indicate that LinSeg should output NAN,
       // make ASG think TN == 0.
       std::fill(pNewTarget, pNewTarget + T, -1);
     } else {
-      for (intl t = 0; t < T; ++t) {
+      for (long long t = 0; t < T; ++t) {
         pNewTarget[t] = pTarget[t * TN / T];
       }
     }

@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.5.1)
 
 # ----------------------------- Dependencies -----------------------------
-# MKL
-find_package(MKL REQUIRED)
-if (MKL_FOUND)
-  message(STATUS "MKL found")
+# CBLAS
+find_package(BLAS REQUIRED)
+if (BLAS_FOUND)
+  message(STATUS "BLAS found (library: ${BLAS_LIBRARIES}")
 else()
-  message(STATUS "MKL not found")
+  message(STATUS "BLAS not found")
 endif()
 
 # FFTW
@@ -20,6 +20,7 @@ endif()
 # Sndfile
 # The SndFile CMake build doesn't correctly export targets for
 # its Vorbis and FLAC dependencies, so they need to be manually found.
+include(CMakeFindDependencyMacro)
 function(findAndCheckSndFileDependency DEP)
   find_dependency(${DEP} REQUIRED)
   if (${DEP}_FOUND)
@@ -62,9 +63,9 @@ target_link_libraries(
   feature
   INTERFACE
   common
-  ${MKL_LIBRARIES}
+  ${BLAS_LIBRARIES}
   ${FFTW_LIBRARIES}
-  SndFile::sndfile # imported target
+  sndfile # imported target
   # ${SNDFILE_LIBRARIES}
   ${GLOG_LIBRARIES}
   )
@@ -73,5 +74,5 @@ target_include_directories(
   feature
   INTERFACE
   src/feature
-  ${MKL_INCLUDE_DIR}
+  #${MKL_INCLUDE_DIR}
   )

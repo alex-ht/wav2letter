@@ -17,7 +17,7 @@ namespace w2l {
 class ForceAlignmentCriterion : public fl::BinaryModule {
  public:
   explicit ForceAlignmentCriterion(
-      intl N,
+      long long N,
       w2l::CriterionScaleMode scalemode = w2l::CriterionScaleMode::NONE);
 
   fl::Variable forward(const fl::Variable& input, const fl::Variable& target)
@@ -29,7 +29,7 @@ class ForceAlignmentCriterion : public fl::BinaryModule {
   friend class AutoSegmentationCriterion;
   ForceAlignmentCriterion() = default;
 
-  intl N_;
+  long long N_;
   w2l::CriterionScaleMode scaleMode_;
 
   FL_SAVE_LOAD_WITH_BASE(fl::BinaryModule, N_, scaleMode_)

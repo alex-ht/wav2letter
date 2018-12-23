@@ -1,5 +1,13 @@
 cmake_minimum_required(VERSION 3.5.1)
 
+# CBLAS
+find_package(BLAS REQUIRED)
+if (BLAS_FOUND)
+  message(STATUS "BLAS found (library: ${BLAS_LIBRARIES}")
+else()
+  message(STATUS "BLAS not found")
+endif()
+
 add_library(
   runtime
   INTERFACE
@@ -17,6 +25,7 @@ target_sources(
 target_link_libraries(
   runtime
   INTERFACE
+  ${BLAS_LIBRARIES}
   common
   flashlight::flashlight
   ${GLOG_LIBRARIES}

@@ -16,7 +16,7 @@ namespace w2l {
 class LinearSegmentationCriterion : public AutoSegmentationCriterion {
  public:
   explicit LinearSegmentationCriterion(
-      intl N,
+      long long N,
       w2l::CriterionScaleMode scaleMode = w2l::CriterionScaleMode::NONE)
       : AutoSegmentationCriterion(N, scaleMode) {}
 

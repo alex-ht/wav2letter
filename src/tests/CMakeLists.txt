@@ -1,4 +1,11 @@
 cmake_minimum_required(VERSION 3.5.1)
+# CBLAS
+find_package(BLAS REQUIRED)
+if (BLAS_FOUND)
+  message(STATUS "BLAS found (library: ${BLAS_LIBRARIES}")
+else()
+  message(STATUS "BLAS not found")
+endif()
 
 # Find GTest
 find_package(GTest)
@@ -20,6 +27,7 @@ function(build_test SRCFILE)
   target_link_libraries(
     ${target}
     PRIVATE
+    ${BLAS_LIBRARIES}
     wav2letter++
     GTest::GTest
     GTest::Main

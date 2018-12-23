@@ -19,7 +19,7 @@ namespace w2l {
 class AutoSegmentationCriterion : public SequenceCriterion {
  public:
   explicit AutoSegmentationCriterion(
-      intl N,
+      long long N,
       w2l::CriterionScaleMode scalemode = w2l::CriterionScaleMode::NONE,
       double transdiag = 0.0)
       : N_(N),
@@ -65,7 +65,7 @@ class AutoSegmentationCriterion : public SequenceCriterion {
   }
 
  private:
-  intl N_;
+  long long N_;
   w2l::CriterionScaleMode scaleMode_;
   ForceAlignmentCriterion fac_;
   FullConnectionCriterion fcc_;

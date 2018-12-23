@@ -13,15 +13,15 @@
 namespace w2l {
 
 struct SpeechStats {
-  intl totalInputSz_;
-  intl totalTargetSz_;
-  intl maxInputSz_;
-  intl maxTargetSz_;
-  intl numSamples_;
+  long long totalInputSz_;
+  long long totalTargetSz_;
+  long long maxInputSz_;
+  long long maxTargetSz_;
+  long long numSamples_;
 
   SpeechStats();
   void reset();
-  std::vector<intl> toArray();
+  std::vector<long long> toArray();
 };
 
 class SpeechStatMeter {
@@ -29,7 +29,7 @@ class SpeechStatMeter {
   SpeechStatMeter();
   void add(const af::array& input, const af::array& target);
   void add(const SpeechStats& stats);
-  std::vector<intl> value();
+  std::vector<long long> value();
   void reset();
 
  private:

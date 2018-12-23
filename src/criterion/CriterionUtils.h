@@ -86,6 +86,6 @@ CriterionScaleFn getCriterionScaleFn(CriterionScaleMode scale);
 // Input: N x T x B (type: float), Output: T x B (type: int)
 af::array viterbiPath(const af::array& input, const af::array& trans);
 
-fl::Variable getLinearTarget(const fl::Variable& target, intl T);
+fl::Variable getLinearTarget(const fl::Variable& target, long long T);
 
 } // namespace w2l

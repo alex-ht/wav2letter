@@ -7,9 +7,8 @@
  */
 
 #include "SpeechUtils.h"
-
+#include <cblas.h>
 #include <glog/logging.h>
-
 namespace speech {
 
 template <typename T>
@@ -35,15 +34,15 @@ template <>
 std::vector<float> mklGemm(
     const std::vector<float>& matA,
     const std::vector<float>& matB,
-    MKL_INT n,
-    MKL_INT k) {
+    int n,
+    int k) {
   LOG_IF(
       FATAL,
       n <= 0 || k <= 0 || matA.empty() || (matA.size() % k != 0) ||
           (matB.size() != n * k))
       << "Invalid args";
 
-  MKL_INT m = matA.size() / k;
+  int m = matA.size() / k;
 
   std::vector<float> matC(m * n);
 
@@ -69,15 +68,15 @@ template <>
 std::vector<double> mklGemm(
     const std::vector<double>& matA,
     const std::vector<double>& matB,
-    MKL_INT n,
-    MKL_INT k) {
+    int n,
+    int k) {
   LOG_IF(
       FATAL,
       n <= 0 || k <= 0 || matA.empty() || (matA.size() % k != 0) ||
           (matB.size() != n * k))
       << "Invalid args";
 
-  MKL_INT m = matA.size() / k;
+  int m = matA.size() / k;
 
   std::vector<double> matC(m * n);
 
