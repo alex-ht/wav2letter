@@ -1,5 +1,5 @@
 FROM nvidia/cuda:9.2-cudnn7-devel-ubuntu18.04
-ARG NJ=40
+ARG NJ=1
 RUN echo "NJ=${NJ}"
 # switch to TW mirror
 RUN sed -i "s:archive.:tw.archive.:g" /etc/apt/sources.list
