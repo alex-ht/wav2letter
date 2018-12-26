@@ -1,3 +1,4 @@
 #!/bin/bash
-nvidia-docker build --memory-swap 0 -t wave2letter:test .
-nvidia-docker push wave2letter:test
+docker build --memory-swap 0 -t wave2letter:cblas .
+docker tag wave2letter:cblas alexht/wav2letter:cblas
+docker push alexht/wav2letter:cblas
