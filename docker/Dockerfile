@@ -1,4 +1,6 @@
 FROM nvidia/cuda:9.2-cudnn7-devel-ubuntu18.04
+ARG NJ=40
+RUN echo "NJ=${NJ}"
 # switch to TW mirror
 RUN sed -i "s:archive.:tw.archive.:g" /etc/apt/sources.list
 RUN apt-get update
@@ -13,8 +15,8 @@ ENV CXX=clang++-3.9
 RUN apt-get install -y libgtest-dev
 WORKDIR /usr/src/gtest
 RUN cmake .
-RUN make -j 40
-RUN make -j 40 install
+RUN make -j ${NJ}
+RUN make -j ${NJ} install
 
 # install ArrayFire with cpu+cuda backend
 RUN ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/lib/libcuda.so.1 && \
@@ -30,8 +32,8 @@ RUN mv arrayfire-full-3.6.2 arrayfire
 RUN mkdir -p arrayfire/build
 WORKDIR /root/arrayfire/build
 RUN cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_OPENCL=OFF -DBUILD_CUDA=ON -DBUILD_CPU=ON -DBUILD_TEST=OFF
-RUN make -j 40 
-RUN make -j 40  install
+RUN make -j ${NJ} 
+RUN make -j ${NJ}  install
 
 # install GLog
 RUN apt-get install -y libgoogle-glog-dev
@@ -47,8 +49,8 @@ WORKDIR /root/cereal/build
 # uncommented next line when using gcc/g++
 # RUN cmake .. -DTHREAD_SAFE=ON -DCMAKE_CXX_FLAGS="-Werror=implicit-fallthrough=0 -pthread"
 RUN cmake .. -DTHREAD_SAFE=ON -DCMAKE_CXX_FLAGS="-pthread"
-RUN make -j 40 
-RUN make -j 40 install
+RUN make -j ${NJ} 
+RUN make -j ${NJ} install
 # 2. flashlight
 WORKDIR /root
 RUN apt-get install -y unzip
@@ -56,9 +58,9 @@ RUN wget --quiet https://github.com/facebookresearch/flashlight/archive/master.z
 RUN unzip master.zip && ln -s flashlight-master flashlight
 RUN mkdir -p flashlight/build
 WORKDIR /root/flashlight/build
-RUN cmake -j 40 .. -DCMAKE_BUILD_TYPE=Release -DFLASHLIGHT_BACKEND=CUDA -DCMAKE_POSITION_INDEPENDENT_CODE=ON
-RUN make -j 40 
-RUN make -j 40 install
+RUN cmake .. -DCMAKE_BUILD_TYPE=Release -DFLASHLIGHT_BACKEND=CUDA -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+RUN make -j ${NJ} 
+RUN make -j ${NJ} install
 
 #install 
 #kenlm
@@ -68,7 +70,7 @@ RUN wget -O - https://kheafield.com/code/kenlm.tar.gz |tar xz
 RUN mkdir -p kenlm/build
 WORKDIR /root/kenlm/build
 RUN CC=gcc CXX=g++ cmake .. -DCMAKE_POSITION_INDEPENDENT_CODE=ON
-RUN make -j 40  &&  make -j 40 install
+RUN make -j ${NJ}  &&  make -j ${NJ} install
 RUN cp lib/* /usr/local/lib/
 WORKDIR /root/kenlm/include/util
 RUN ln -s ../../util/double-conversion double-conversion
@@ -84,4 +86,4 @@ RUN cmake -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_INCLUDE_PATH=/root/kenlm/include \
           -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
           ..
-RUN make -j 40 
+RUN make -j ${NJ} 
